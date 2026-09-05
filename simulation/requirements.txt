@@ -1,0 +1,14 @@
+# Laser Turret Simulation — Python dependencies
+# Core (required)
+matplotlib>=3.5.0
+numpy>=1.20.0
+
+# Gamepad input (install one)
+pygame>=2.1.0
+
+# Camera tracking (optional — simulation works without these)
+# opencv-python>=4.5.0
+# mediapipe>=0.8.0
+
+# Gamepad HID alternative (optional, if pygame doesn't detect gamepad)
+# hidapi>=0.14.0
