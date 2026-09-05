@@ -3,3 +3,9 @@ __pycache__/
 *.pyo
 .DS_Store
 Thumbs.db
+
+# heavy model (fetch via fetch_models.py, not stored in git)
+simulation/*.onnx
+
+# face enrollment database (personal data)
+simulation/users.json

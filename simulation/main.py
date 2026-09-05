@@ -157,6 +157,17 @@ HEAD_PITCH_FLIP = 1.0
 track_source = "HAND"
 show_mask = True
 
+# --- face recognition (ArcFace embeddings) ---
+face_recog = None
+recog_ready = False
+recog_user = None
+recog_threshold = 0.30
+recog_conf = 0.0
+recog_last_embed = None
+recog_next_time = 0.0
+recog_cand = None
+recog_cand_hits = 0
+
 try:
     import mediapipe as mp
     from mediapipe.tasks import python as mp_python
@@ -205,6 +216,28 @@ except FileNotFoundError:
     print("[Track] A .task model file was not found")
 except Exception as e:
     print(f"[Track] Disabled: {e}")
+
+try:
+    import os as _os
+    from common.face_ai import FaceRecognizer
+    _bd = _os.path.dirname(_os.path.abspath(__file__))
+    face_recog = FaceRecognizer(
+        _os.path.join(_bd, "arcface.onnx"),
+        _os.path.join(_bd, "users.json"),
+    )
+    threading.Thread(target=_init_face_recog, daemon=True).start()
+except Exception as e:
+    print(f"[FaceAI] Disabled: {e}")
+
+
+def _init_face_recog():
+    global face_recog, recog_ready
+    try:
+        if face_recog is not None and face_recog.load_model():
+            recog_ready = True
+            print(f"[FaceAI] ArcFace ready ({len(face_recog.users)} users enrolled)")
+    except Exception as e:
+        print(f"[FaceAI] init failed: {e}")
 
 gamepad_connected = False
 joy = None
@@ -448,6 +481,74 @@ def process_faces():
         face_detected = False
         face_pts = []
         face_pts_draw = []
+    _maybe_recognize()
+
+
+def _maybe_recognize():
+    global recog_user, recog_conf, recog_last_embed, recog_next_time
+    global recog_cand, recog_cand_hits
+    if face_recog is None or not recog_ready or face_recog.sess is None:
+        return
+    if not face_detected or not face_pts or camera_raw is None:
+        if recog_cand_hits > 0:
+            recog_cand_hits -= 1
+            if recog_cand_hits == 0:
+                recog_cand = None
+                recog_user = None
+                recog_conf = 0.0
+        return
+    now = time.time()
+    if now < recog_next_time:
+        return
+    recog_next_time = now + 0.25
+    try:
+        h, w = camera_raw.shape[:2]
+        xs = [p[0] * w for p in face_pts]
+        ys = [p[1] * h for p in face_pts]
+        x0, x1 = int(min(xs)), int(max(xs))
+        y0, y1 = int(min(ys)), int(max(ys))
+        mw, mh = (x1 - x0) * 0.4, (y1 - y0) * 0.4
+        x0 = max(0, int(x0 - mw)); x1 = min(w, int(x1 + mw))
+        y0 = max(0, int(y0 - mh)); y1 = min(h, int(y1 + mh))
+        if (x1 - x0) < 24 or (y1 - y0) < 24:
+            return
+        emb = face_recog.embed(camera_raw[y0:y1, x0:x1])
+        if emb is None:
+            return
+        recog_last_embed = emb
+        name, sim = face_recog.match(emb, threshold=recog_threshold)
+        if name is not None:
+            if name == recog_cand:
+                recog_cand_hits += 1
+            else:
+                recog_cand = name
+                recog_cand_hits = 1
+            if recog_cand_hits >= 2:
+                recog_user = recog_cand
+                recog_conf = sim
+        else:
+            recog_cand_hits = 0
+            recog_cand = None
+    except Exception:
+        pass
+
+
+def enroll_face():
+    global recog_user
+    if face_recog is None or not recog_ready:
+        print("[FaceAI] model not ready yet")
+        return
+    if recog_last_embed is None:
+        print("[FaceAI] no face to enroll — hold still in view")
+        return
+    n = len(face_recog.users) + 1
+    name = "PLAYER%d" % n
+    while name in face_recog.users:
+        n += 1
+        name = "PLAYER%d" % n
+    face_recog.enroll(name, recog_last_embed)
+    recog_user = name
+    print(f"[FaceAI] enrolled '{name}' — press E a few times for more samples")
 
 
 def draw_setup_screen(surface):
@@ -767,6 +868,12 @@ def draw_hud(surface, x, y, w=290):
                 add(f"CTR: {HEAD_CENTER_YAW:+.1f}/{HEAD_CENTER_PITCH:+.1f}", GRAY, FONT_XS)
                 add("look around = aim", CYAN, FONT_S)
                 add("C = recenter", GRAY, FONT_XS)
+                if face_recog is not None and recog_ready:
+                    if recog_user:
+                        add(f"ID: {recog_user}  {recog_conf * 100.0:.0f}%", GREEN, FONT_B)
+                    else:
+                        add("ID: ??? (enroll E)", YELLOW, FONT_S)
+                    add(f"THR: {recog_threshold * 100.0:.0f}%  +/-", GRAY, FONT_XS)
             else:
                 add("FACE: NOT FOUND", RED, FONT_B)
                 add("show face to camera", GRAY, FONT_XS)
@@ -780,6 +887,8 @@ def draw_hud(surface, x, y, w=290):
     add("T   toggle HAND/FACE", GRAY, FONT_XS)
     add("M   mask on/off", GRAY, FONT_XS)
     add("C   recenter head", GRAY, FONT_XS)
+    add("E   enroll face (F mode)", GRAY, FONT_XS)
+    add("+/- face match threshold", GRAY, FONT_XS)
     add("Y   cycle target cam", GRAY, FONT_XS)
     add("U   cycle user cam", GRAY, FONT_XS)
     add("SPACE Laser on/off", GRAY, FONT_XS)
@@ -842,6 +951,14 @@ while running:
             elif event.key == pygame.K_m:
                 show_mask = not show_mask
                 print(f"[Mask] overlay {'ON' if show_mask else 'OFF'}")
+            elif event.key == pygame.K_e:
+                enroll_face()
+            elif event.key in (pygame.K_EQUALS, pygame.K_PLUS, pygame.K_KP_PLUS):
+                recog_threshold = max(0.05, recog_threshold - 0.02)
+                print(f"[FaceAI] match threshold = {recog_threshold:.2f}")
+            elif event.key == pygame.K_MINUS:
+                recog_threshold = min(0.60, recog_threshold + 0.02)
+                print(f"[FaceAI] match threshold = {recog_threshold:.2f}")
             elif event.key == pygame.K_c:
                 recenter_head()
                 aim_pan = 90.0
