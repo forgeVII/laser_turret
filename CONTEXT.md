@@ -502,7 +502,9 @@ Test log: `simulation/bridge_test_result.txt`.
 8. ~~Left-top gauges~~ **REPLACED 2026-11-23**: both X/Y dial boxes removed;
    single `GIMBAL POSE` scope + HUD travel sliders from the Antigravity pass
    reintroduced in the clean layout. `main.py` is now final.
-9. Commit/push only when asked (explicit request still pending).
+9. Commit/push **DONE 2026-11-23**: `3b82494` pushed to `origin/main`
+   (`forgeVII/laser_turret`). Local rollback copies, archived pre-AP sketches,
+   build output and stale test logs stay unpublished.
 
 ---
 
