@@ -1,6 +1,6 @@
 # Laser Turret Project — Chat Tracker
 
-> **Semester:** 5 Micro Project (SET/EC/BT/S506, 2 credits)
+> **Project type:** workshop build
 > **Started:** 2026-09-04
 > **Status:** Simulation framework created, testing needed
 
@@ -9,8 +9,8 @@
 ## Project Identity
 
 - **Name:** Multi-Input Laser Turret System
-- **Philosophy:** PC = brain, MCU = muscle. College only gets the muscle.
-- **College submission:** MCU + 2 servos + laser + HC-SR04 + wires (permanently soldered)
+- **Philosophy:** PC = brain, MCU = muscle. Only the actuator unit is handed over.
+- **Handover unit:** MCU + 2 servos + laser + wires (permanently soldered)
 - **You keep:** PC, gamepad, camera, Python code, GitHub repo
 - **Coding:** AI writes all code, Harish builds the idea and tests
 
@@ -46,13 +46,13 @@ Mode switching: Keyboard press (1/2/3). Camera sub-modes: 3a/3b/3c.
 
 ---
 
-## Hardware — What College Gets
+## Hardware — Handover Unit
 
 | Component | Source | Cost |
 |---|---|---|
 | 2x SG90 servo | Buy | ~200 (~100 each) |
 | 1x Laser module (5V TTL) | Buy | ~20 |
-| 1x HC-SR04 ultrasonic | Buy (TBAS is submitted) | ~40 |
+| 1x HC-SR04 ultrasonic | Buy (not available from TBAS) | ~40 |
 | External 5V supply (servos) | Buy | ~50-80 |
 | Perfboard + wires + headers | Buy/scrap | ~30-50 |
 | MCU | **TBD** | **TBD** |
@@ -60,7 +60,7 @@ Mode switching: Keyboard press (1/2/3). Camera sub-modes: 3a/3b/3c.
 
 ---
 
-## Hardware — What You Keep (not submitted)
+## Hardware — What You Keep (not handed over)
 
 | Component | Notes |
 |---|---|
@@ -75,7 +75,7 @@ Mode switching: Keyboard press (1/2/3). Camera sub-modes: 3a/3b/3c.
 
 **Situation:**
 - Harish owns 1 Blue Pill -> committed to gamepad
-- TBAS (Nano) is submitted to college
+- TBAS (Nano) hardware is not available
 - Blue Pill supports USB HID upload (no ST-Link, no TTL needed)
 - Servos powered externally, not from MCU
 
@@ -174,16 +174,16 @@ simulation/
 - **Strengths:** Ideas, features, mechanical construction, testing, research
 - **Gamepad firmware:** Arduino variant with MPU6050 working (original or v2)
 - **Gamepad HID:** Sends X/Y/Z (MPU yaw/pitch/roll) + Rx/Ry/Rz (sticks) + buttons via USB
-- **Budget:** Under 1k for sem 5 project
+- **Budget:** Under 1k for this build
 - **Timeline:** Flexible, start whenever ready
-- **TBAS:** Submitted to college, hardware not recoverable
+- **TBAS:** Hardware released, not recoverable
 - **Python:** Complete beginner — AI writes everything
 
 ---
 
 ## TBAS Hardware Status
 
-TBAS is submitted to college. All TBAS components (Nano, mics, LM393, TSOP1838, IR LED, servo) are NOT available. Must buy fresh for this project.
+TBAS hardware was released. All TBAS components (Nano, mics, LM393, TSOP1838, IR LED, servo) are NOT available. Must buy fresh for this project.
 
 ---
 
@@ -196,7 +196,7 @@ TBAS is submitted to college. All TBAS components (Nano, mics, LM393, TSOP1838, 
 
 ---
 
-## College Submission Checklist
+## Handover Checklist
 
 - [ ] MCU with permanently soldered servos + laser
 - [ ] HC-SR04 mounted on turret
@@ -212,4 +212,4 @@ TBAS is submitted to college. All TBAS components (Nano, mics, LM393, TSOP1838, 
 |---|---|
 | 2026-09-04 | Initial planning session. All modes locked. Architecture locked. |
 | 2026-09-04 | Price correction: servos ~200 (not 80). HC-SR04 added as Mode 4. |
-| 2026-09-04 | Clarified: 1 Blue Pill (gamepad), TBAS submitted, servo power external. |
+| 2026-09-04 | Clarified: 1 Blue Pill (gamepad), TBAS hardware released, servo power external. |

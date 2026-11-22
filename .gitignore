@@ -9,3 +9,13 @@ simulation/*.onnx
 
 # face enrollment database (personal data)
 simulation/users.json
+
+# Arduino CLI build artifacts (regenerated on compile)
+firmware/**/build/
+
+# Local rollback copies — not part of the published project
+*_backup.py
+*_backup.ino
+
+# Stale one-off test logs
+*_result.txt
