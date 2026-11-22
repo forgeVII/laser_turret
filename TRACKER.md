@@ -107,13 +107,15 @@ Mode switching: Keyboard press (1/2/3). Camera sub-modes: 3a/3b/3c.
 
 ---
 
-## Power Design (to be detailed later)
+## Power Design
 
-- **MCU:** Powered from USB (to PC)
-- **Servos:** External 5V supply (separate from MCU)
-- **Laser:** 5V from external supply or MCU
-- **HC-SR04:** 5V from MCU or external supply
-- **Common GND** between MCU supply and servo supply
+Power supply docs are in the dedicated
+[forgeVII/laser_turret_psu](https://github.com/forgeVII/laser_turret_psu) repo
+(`PSU.md`, `BUILD_NOTES.md`).
+
+As built: two 5 V rails — MP1584 fixed 5 V for ESP32 + Blue Pill, XL4015 variable
+5 V (CC 2.0 A) for servos + laser — with one common GND and a BMS/charger. The
+HC-SR04 was discarded and is not used.
 
 ---
 

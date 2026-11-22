@@ -10,9 +10,11 @@ Store in `media/photos/`, then link here.
 | Slot | File | Caption | Status |
 |---|---|---|---|
 | 01 | `media/photos/01-turret-overview.jpg` | full assembly | reserved |
-| 02 | `media/photos/02-psu-header.jpg` | PSU header and wiring | reserved |
-| 03 | `media/photos/03-gimbal.jpg` | pan/tilt mechanism | reserved |
-| 04 | `media/photos/04-simulator-hud.png` | final HUD at native resolution | reserved |
+| 02 | `media/photos/02-gimbal.jpg` | pan/tilt mechanism | reserved |
+| 03 | `media/photos/03-simulator-hud.png` | final HUD at native resolution | reserved |
+
+PSU photos and videos are reserved in the dedicated
+[forgeVII/laser_turret_psu](https://github.com/forgeVII/laser_turret_psu) repo.
 
 ## Videos
 
@@ -28,7 +30,8 @@ Store in `media/videos/` (or link to a hosted video), then add here.
 
 | Platform | URL | Notes |
 |---|---|---|
-| Repository | https://github.com/forgeVII/laser_turret | this project |
+| Repository | https://github.com/forgeVII/laser_turret | turret project |
+| PSU repo | https://github.com/forgeVII/laser_turret_psu | power supply |
 | Demo video | — | reserved |
 | Photo album | — | reserved |
 | Short-form post | — | reserved |

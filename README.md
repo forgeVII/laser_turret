@@ -36,10 +36,12 @@ Full key map and calibration notes are in `CONTEXT.md`.
 | File | Contents |
 |---|---|
 | `CONTEXT.md` | full technical context, keys, calibration, verification log, gotchas |
-| `PSU.md` | as-built power supply, header map, wiring and safety rules |
 | `TRACKER.md` | build tracker and component list |
 | `UI_HANDOVER.md` | bounded UI constraints and display architecture |
 | `MEDIA.md` | reserved slots for photos, videos and social links |
+
+Power supply docs live in their own repo:
+[forgeVII/laser_turret_psu](https://github.com/forgeVII/laser_turret_psu).
 
 ## Firmware
 

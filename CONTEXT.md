@@ -84,46 +84,19 @@ No auto-rest (removed with the no-rest geometry). The PC sends a heartbeat
 | ST-Link V2 | flashing + bench 3.3 V only; not part of final setup |
 | HC-SR04 | **discarded / not used** |
 
-### 3.2 PSU header map (as built)
+### 3.2 Power and wiring
 
-| Pin | Function |
-|---|---|
-| 1 | fixed 5 V — MP1584 (ESP32 + Blue Pill) |
-| 2 | variable 5 V — XL4015, CC set 2.0 A (servos + laser) |
-| 3 | ESP32 TX (GPIO1) |
-| 4 | ESP32 RX (GPIO3) |
-| 5 | GND |
+The PSU has its own dedicated repo:
+[forgeVII/laser_turret_psu](https://github.com/forgeVII/laser_turret_psu).
+`PSU.md` there is the canonical header map, wiring table, power budget and safety
+rules; `BUILD_NOTES.md` records the physical faults found during assembly.
 
-### 3.3 Final wiring
+In short: ESP32 + Blue Pill on the MP1584 fixed 5 V rail; servos + laser on the
+XL4015 variable 5 V rail (CC 2.0 A); one common GND. Never power the turret from
+STM32 USB, never double-feed Blue Pill 5 V, and never send servo current through
+the Blue Pill 5 V pin. `F` and the 2 s watchdog force laser OFF and hold.
 
-| From | To |
-|---|---|
-| ESP32 VIN/5V | PSU header 1 |
-| ESP32 GND | PSU header 5 |
-| ESP32 TX (GPIO1) | header 3 → Blue Pill **PA10** |
-| ESP32 RX (GPIO3) | header 4 ← Blue Pill **PA9** |
-| Blue Pill 5V | PSU header 1 |
-| Blue Pill GND | PSU header 5 |
-| Servo + laser +5V | PSU header 2 |
-| All grounds | PSU header 5 (common) |
-| Laser red/+ | PSU pin 2 |
-| Laser bare/− | BC547 collector |
-| BC547 emitter | GND |
-| PA2 → 1 kΩ | BC547 base |
-
-BC547 orientation, flat face toward you, legs down: **C – B – E** (left / middle / right).
-
-### 3.4 Power rules (never violate)
-
-- Never power the whole turret from STM32 USB. USB measured **4.80 V, ~0.7 A**.
-- Never feed Blue Pill 5 V from PSU and USB/ST-Link 3.3 V at the same time.
-- No servo current through the Blue Pill 5 V pin.
-- CP2102 data-only: TX/RX/GND connected, **CP2102 5 V not connected**.
-- ESP32 and Blue Pill share the MP1584 rail; servos/laser share the XL4015 rail.
-- Power math: servo+laser peak ~1.54 A; ESP32+Blue Pill peak ~0.6 A; total ~11 W.
-- Jitter was diagnosed: **no voltage drop**; current limit stays 2.0 A.
-
-### 3.5 Physical axes and safe envelope (re-aligned 2026-11-19)
+### 3.3 Physical axes and safe envelope (re-aligned 2026-11-19)
 
 | Axis | Pin | Centre | Working range | Notes |
 |---|---|---|---|---|
@@ -137,7 +110,7 @@ BC547 orientation, flat face toward you, legs down: **C – B – E** (left / mi
   collisions inside the new envelope.
 - `Servo.read()` is unreliable on this core — firmware tracks `posX`/`posY` itself.
 
-### 3.6 Toolchain / flashing
+### 3.4 Toolchain / flashing
 
 - Arduino IDE + **Arduino_STM32** core (NOT `Arduino_STM32-master`, NOT STMicroelectronics core).
 - Active core: `C:\Users\hc808\OneDrive\Apps\Documents\Arduino\hardware\Arduino_STM32\STM32F1`.
@@ -244,15 +217,9 @@ Transparent bridge, no protocol translation:
   sketch folder so Arduino CLI ignores them), excluded from the published repo.
   Only the AP-only bridge is shipped.
 
-**Critical physical faults found and fixed inside the PSU box:**
-1. The GND near the ESP32 5 V pin was **not continuous** with the board's other
-   grounds — use the working GND.
-2. **SD1 and SD0 were shorted** on the ESP32 base, killing flash reads (`invalid
-   header: 0x00000000`, RTCWDT reset loop). Fixed; boot is clean now.
-
-Do not let the CP2102 dongle drive header 3/4 during normal operation — its TX would
-contend with Blue Pill PA9 on ESP32 GPIO3. Dongle can stay on PC USB if its UART pins
-are disconnected from the header.
+Physical faults fixed inside the PSU box and the CP2102 debug-header rule are
+recorded in the PSU repo's `BUILD_NOTES.md`:
+[forgeVII/laser_turret_psu](https://github.com/forgeVII/laser_turret_psu).
 
 ---
 
@@ -505,6 +472,10 @@ Test log: `simulation/bridge_test_result.txt`.
 9. Commit/push **DONE 2026-11-23**: `3b82494` pushed to `origin/main`
    (`forgeVII/laser_turret`). Local rollback copies, archived pre-AP sketches,
    build output and stale test logs stay unpublished.
+10. PSU docs moved to a dedicated repo,
+    [forgeVII/laser_turret_psu](https://github.com/forgeVII/laser_turret_psu),
+    on the same date. This repo keeps only turret control, firmware, simulator
+    and media slots.
 
 ---
 
