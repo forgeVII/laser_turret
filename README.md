@@ -69,8 +69,8 @@ PC (pygame + vision + aiming)
 
 | Pin | Function | Type |
 |---|---|---|
-| PA0 | Servo X — pan | PWM out |
-| PA1 | Servo Y — tilt | PWM out |
+| PA1 | Servo X — pan | PWM out |
+| PA0 | Servo Y — tilt | PWM out |
 | PA2 | Laser ON/OFF | Digital out |
 | PA9 | UART TX (from ESP32) | UART |
 | PA10 | UART RX (to ESP32) | UART |
