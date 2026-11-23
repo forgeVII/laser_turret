@@ -1,7 +1,7 @@
 # LASER TURRET — Full Project Context
 
 > Single source of truth for this project. Read this first when resuming.
-> Repo: `C:\learning\projects\embedded\laser_turret` · remote `https://github.com/forgeVII/laser_turret` (private)
+> Repo: `C:\learning\projects\embedded\laser_turret` · remote `https://github.com/forgeVII/laser_turret` (public)
 > Last updated: 2026-11-23
 
 ---

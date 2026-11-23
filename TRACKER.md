@@ -91,19 +91,18 @@ Mode switching: Keyboard press (1/2/3). Camera sub-modes: 3a/3b/3c.
 
 ---
 
-## Pin Count (locked — 7 GPIO)
+## Pin Count (locked — 5 GPIO used)
 
 | Pin | Function | Type |
 |---|---|---|
-| PA0 | Servo X (pan) — PWM | Digital/PWM out |
-| PA1 | Servo Y (tilt) — PWM | Digital/PWM out |
+| PA1 | Servo X — pan | Digital/PWM out |
+| PA0 | Servo Y — tilt | Digital/PWM out |
 | PA2 | Laser ON/OFF | Digital out |
-| PA3 | HC-SR04 TRIG | Digital out |
-| PA4 | HC-SR04 ECHO | Digital in |
-| PA9 | UART TX (to PC) | UART TX |
-| PA10 | UART RX (from PC) | UART RX |
+| PA9 | UART1 TX → ESP32 RX | UART TX |
+| PA10 | UART1 RX ← ESP32 TX | UART RX |
 
-**Note:** If using USB HID instead of UART, PA9/PA10 free up -> only 5 GPIO needed.
+**Note:** HC-SR04 was tried and discarded — PA3/PA4 are not used. PA13/PA14 are SWD
+(flashing/debug), not part of the 5 operational GPIO.
 
 ---
 

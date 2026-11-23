@@ -54,7 +54,7 @@ bring-up notes live in [forgeVII/Portable-Bench-PSU](https://github.com/forgeVII
 PC (pygame + vision + aiming)
   -> ESP32 SoftAP "TURRET_LINK" (TCP 192.168.4.1:8888)
   -> UART0 -> STM32 Blue Pill
-  -> PA0 / PA1 : pan + tilt servos
+  -> PA1 / PA0 : X(pan) + Y(tilt) servos
   -> PA2       : laser ON/OFF
 ```
 
