@@ -109,9 +109,9 @@ Mode switching: Keyboard press (1/2/3). Camera sub-modes: 3a/3b/3c.
 
 ## Power Design
 
-Power supply docs are in the dedicated
-[forgeVII/laser_turret_psu](https://github.com/forgeVII/laser_turret_psu) repo
-(`PSU.md`, `BUILD_NOTES.md`).
+Power supply docs are in the shared
+[forgeVII/Portable-Bench-PSU](https://github.com/forgeVII/Portable-Bench-PSU) repo
+(`PSU.md`, `BUILD_NOTES.md`) — one box reused across projects, not turret-only.
 
 As built: two 5 V rails — MP1584 fixed 5 V for ESP32 + Blue Pill, XL4015 variable
 5 V (CC 2.0 A) for servos + laser — with one common GND and a BMS/charger. The

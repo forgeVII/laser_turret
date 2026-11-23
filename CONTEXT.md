@@ -86,8 +86,8 @@ No auto-rest (removed with the no-rest geometry). The PC sends a heartbeat
 
 ### 3.2 Power and wiring
 
-The PSU has its own dedicated repo:
-[forgeVII/laser_turret_psu](https://github.com/forgeVII/laser_turret_psu).
+The PSU is one shared bench box, used here and in future projects. Its docs live in
+[forgeVII/Portable-Bench-PSU](https://github.com/forgeVII/Portable-Bench-PSU).
 `PSU.md` there is the canonical header map, wiring table, power budget and safety
 rules; `BUILD_NOTES.md` records the physical faults found during assembly.
 
@@ -218,8 +218,8 @@ Transparent bridge, no protocol translation:
   Only the AP-only bridge is shipped.
 
 Physical faults fixed inside the PSU box and the CP2102 debug-header rule are
-recorded in the PSU repo's `BUILD_NOTES.md`:
-[forgeVII/laser_turret_psu](https://github.com/forgeVII/laser_turret_psu).
+recorded in the shared PSU repo's `BUILD_NOTES.md`:
+[forgeVII/Portable-Bench-PSU](https://github.com/forgeVII/Portable-Bench-PSU).
 
 ---
 
@@ -472,10 +472,10 @@ Test log: `simulation/bridge_test_result.txt`.
 9. Commit/push **DONE 2026-11-23**: `3b82494` pushed to `origin/main`
    (`forgeVII/laser_turret`). Local rollback copies, archived pre-AP sketches,
    build output and stale test logs stay unpublished.
-10. PSU docs moved to a dedicated repo,
-    [forgeVII/laser_turret_psu](https://github.com/forgeVII/laser_turret_psu),
-    on the same date. This repo keeps only turret control, firmware, simulator
-    and media slots.
+10. PSU docs consolidated into the shared
+    [forgeVII/Portable-Bench-PSU](https://github.com/forgeVII/Portable-Bench-PSU)
+    repo, since the box is reused across projects. This repo keeps only turret
+    control, firmware, simulator and media slots.
 
 ---
 

@@ -28,8 +28,8 @@ Merged working + build short — tracking, wireless link and the custom PSU.
 |---|---|
 | ![Turret](media/photos/01-turret-overview.jpg) | Finished turret assembly |
 
-PSU photo, rail map and bring-up notes live in the dedicated
-[forgeVII/laser_turret_psu](https://github.com/forgeVII/laser_turret_psu) repo.
+The PSU is a shared dual-rail bench box, not turret-only. Its photo, rail map and
+bring-up notes live in [forgeVII/Portable-Bench-PSU](https://github.com/forgeVII/Portable-Bench-PSU).
 
 ---
 

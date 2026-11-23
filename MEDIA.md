@@ -13,8 +13,8 @@ Store in `media/photos/`, then link here.
 | 02 | `media/photos/02-gimbal.jpg` | pan/tilt mechanism | reserved |
 | 03 | `media/photos/03-simulator-hud.png` | final HUD at native resolution | reserved |
 
-PSU photos and videos are reserved in the dedicated
-[forgeVII/laser_turret_psu](https://github.com/forgeVII/laser_turret_psu) repo.
+PSU photos and videos are reserved in the shared
+[forgeVII/Portable-Bench-PSU](https://github.com/forgeVII/Portable-Bench-PSU) repo.
 
 ## Videos
 
@@ -31,7 +31,7 @@ Store in `media/videos/` (or link to a hosted video), then add here.
 | Platform | URL | Notes |
 |---|---|---|
 | Repository | https://github.com/forgeVII/laser_turret | turret project |
-| PSU repo | https://github.com/forgeVII/laser_turret_psu | power supply |
+| PSU repo | https://github.com/forgeVII/Portable-Bench-PSU | shared dual-rail power box |
 | Demo video | https://youtube.com/shorts/UFWoeOp6Qgk | merged working + build short |
 | Photo album | — | reserved |
 | Short-form post | — | reserved (Instagram reel) |
