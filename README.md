@@ -4,6 +4,8 @@ PC-driven laser turret simulator and firmware. The PC does vision, aiming and
 control; the STM32 drives two servos and the laser; an ESP32 provides a wireless
 transparent TCP-to-UART bridge.
 
+**Demo short:** https://youtube.com/shorts/UFWoeOp6Qgk
+
 > Hardware submission unit: STM32 board + two servos + laser + wiring.
 > The PC, cameras and Python tooling stay with the build.
 
